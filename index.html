@@ -14,6 +14,8 @@
                 <h1 class="logo">🕵️ FACTPOSTOR</h1>
                 <p class="tagline">"A lie is just a fact that hasn't been believed yet."</p>
                 
+                <button id="how-to-play-btn" class="btn btn-link">📖 How to Play</button>
+                
                 <div class="setup-form">
                     <h2>Setup Game</h2>
                     
@@ -106,6 +108,73 @@
                 <div class="button-group">
                     <button id="new-round-btn" class="btn btn-primary">New Round</button>
                     <button id="new-game-btn" class="btn btn-secondary">New Game</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Play Modal -->
+        <div id="how-to-play-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>📖 How to Play FACTPOSTOR</h2>
+                    <button id="close-modal-btn" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="rules-section">
+                        <h3>🎯 Objective</h3>
+                        <p><strong>Citizens:</strong> Identify and vote out the Factpostors<br>
+                        <strong>Factpostors:</strong> Blend in and survive without being caught</p>
+                    </div>
+
+                    <div class="rules-section">
+                        <h3>👥 Roles</h3>
+                        <p><strong>✓ Citizen</strong> - Receives a true fact. Discuss it without revealing directly.</p>
+                        <p><strong>🎭 Factpostor</strong> - Receives nothing. Must invent a believable fake fact on the spot.</p>
+                    </div>
+
+                    <div class="rules-section">
+                        <h3>🎮 Game Flow</h3>
+                        <ol>
+                            <li><strong>Setup:</strong> Enter player names and start the game</li>
+                            <li><strong>Role Reveal:</strong> Pass the device around. Each player taps "Show My Role" privately</li>
+                            <li><strong>Phase 1 - Declarations (2-4 min):</strong> Each player hints at their fact without stating it directly</li>
+                            <li><strong>Phase 2 - Discussion (3-5 min):</strong> Ask questions, challenge statements, form theories</li>
+                            <li><strong>Phase 3 - Revelation:</strong> Each player states their full fact</li>
+                            <li><strong>Phase 4 - Vote:</strong> Everyone points to who they think is a Factpostor</li>
+                            <li><strong>Results:</strong> Reveal all roles and see the true facts</li>
+                        </ol>
+                    </div>
+
+                    <div class="rules-section">
+                        <h3>💡 Tips</h3>
+                        <p><strong>For Citizens:</strong> Be specific about your fact. Vague statements make you look suspicious!</p>
+                        <p><strong>For Factpostors:</strong> Listen carefully to Citizens and build a fact in a similar domain. Stay calm and confident!</p>
+                    </div>
+
+                    <div class="rules-section">
+                        <h3>🏆 Scoring</h3>
+                        <ul>
+                            <li>Factpostor eliminated → Citizens +1 each</li>
+                            <li>Citizen eliminated → Surviving Factpostors +2 each</li>
+                            <li>Factpostor survives → Factpostor +3 bonus</li>
+                        </ul>
+                    </div>
+
+                    <div class="rules-quick-ref">
+                        <h4>Quick Reference</h4>
+                        <table>
+                            <tr>
+                                <th>Players</th>
+                                <th>Recommended Factpostors</th>
+                            </tr>
+                            <tr><td>3-4</td><td>1</td></tr>
+                            <tr><td>5-7</td><td>1-2</td></tr>
+                            <tr><td>8-10</td><td>2-3</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="close-modal-footer-btn" class="btn btn-primary">Got It!</button>
                 </div>
             </div>
         </div>

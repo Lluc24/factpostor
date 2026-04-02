@@ -27,6 +27,18 @@ function initializeEventListeners() {
     });
     document.getElementById('start-game-btn').addEventListener('click', startGame);
     
+    // How to Play modal
+    document.getElementById('how-to-play-btn').addEventListener('click', openHowToPlay);
+    document.getElementById('close-modal-btn').addEventListener('click', closeHowToPlay);
+    document.getElementById('close-modal-footer-btn').addEventListener('click', closeHowToPlay);
+    
+    // Close modal when clicking outside
+    document.getElementById('how-to-play-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'how-to-play-modal') {
+            closeHowToPlay();
+        }
+    });
+    
     // Pass screen
     document.getElementById('ready-btn').addEventListener('click', showRoleReveal);
     
@@ -226,3 +238,13 @@ function resetGame() {
     showScreen('home-screen');
 }
 
+// How to Play Modal
+function openHowToPlay() {
+    document.getElementById('how-to-play-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeHowToPlay() {
+    document.getElementById('how-to-play-modal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
