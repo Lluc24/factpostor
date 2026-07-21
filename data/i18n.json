@@ -1,0 +1,104 @@
+{
+  "appTitle": { "en": "🕵️ FACTPOSTOR", "es": "🕵️ FACTPOSTOR", "ca": "🕵️ FACTPOSTOR" },
+  "tagline": { "en": "\"A lie is just a fact that hasn't been believed yet.\"", "es": "\"Una mentira es solo un hecho que aún no se ha creído.\"", "ca": "\"Una mentida només és un fet que encara no s'ha cregut.\"" },
+  "howToPlayBtn": { "en": "📖 How to Play", "es": "📖 Cómo Jugar", "ca": "📖 Com Jugar" },
+  "languageLabel": { "en": "Language", "es": "Idioma", "ca": "Idioma" },
+
+  "modeSelectLabel": { "en": "Choose a Game Mode", "es": "Elige un Modo de Juego", "ca": "Tria un Mode de Joc" },
+  "mode.facts.name": { "en": "🧠 Facts", "es": "🧠 Datos Curiosos", "ca": "🧠 Dades Curioses" },
+  "mode.facts.desc": { "en": "Everyone gets a different true fact. Impostors get nothing.", "es": "Cada jugador recibe un dato curioso distinto. Los impostores no reciben nada.", "ca": "Cada jugador rep una dada curiosa diferent. Els impostors no reben res." },
+  "mode.classic.name": { "en": "🎭 Classic Impostor", "es": "🎭 Impostor Clásico", "ca": "🎭 Impostor Clàssic" },
+  "mode.classic.desc": { "en": "Everyone gets the same secret word and photo.", "es": "Todos reciben la misma palabra secreta y foto.", "ca": "Tothom rep la mateixa paraula secreta i foto." },
+  "mode.famous.name": { "en": "⭐ Famous People", "es": "⭐ Personajes Famosos", "ca": "⭐ Personatges Famosos" },
+  "mode.famous.desc": { "en": "Everyone gets the same famous person, with photo.", "es": "Todos reciben el mismo personaje famoso, con foto.", "ca": "Tothom rep el mateix personatge famós, amb foto." },
+
+  "setupTitle": { "en": "Setup Game", "es": "Configurar Partida", "ca": "Configurar Partida" },
+  "playerNameLabel": { "en": "Player Names", "es": "Nombres de Jugadores", "ca": "Noms dels Jugadors" },
+  "playerNamePlaceholder": { "en": "Enter player name", "es": "Introduce el nombre", "ca": "Introdueix el nom" },
+  "addBtn": { "en": "Add", "es": "Añadir", "ca": "Afegeix" },
+  "minPlayersHint": { "en": "Add at least 3 players to start", "es": "Añade al menos 3 jugadores para empezar", "ca": "Afegeix com a mínim 3 jugadors per començar" },
+
+  "impostorCountLabel": { "en": "Number of Impostors", "es": "Número de Impostores", "ca": "Nombre d'Impostors" },
+  "impostorAuto": { "en": "Auto (Recommended)", "es": "Automático (Recomendado)", "ca": "Automàtic (Recomanat)" },
+
+  "difficultyLabel": { "en": "What does the Impostor see?", "es": "¿Qué ve el Impostor?", "ca": "Què veu l'Impostor?" },
+  "difficulty.blind.name": { "en": "😶 Nothing (Hardest)", "es": "😶 Nada (Más Difícil)", "ca": "😶 Res (Més Difícil)" },
+  "difficulty.blind.desc": { "en": "The Impostor knows only that they're the Impostor.", "es": "El Impostor solo sabe que lo es.", "ca": "L'Impostor només sap que ho és." },
+  "difficulty.category.name": { "en": "🏷️ The Category", "es": "🏷️ La Categoría", "ca": "🏷️ La Categoria" },
+  "difficulty.category.desc": { "en": "The Impostor sees the category and its photo, but not the exact word.", "es": "El Impostor ve la categoría y su foto, pero no la palabra exacta.", "ca": "L'Impostor veu la categoria i la seva foto, però no la paraula exacta." },
+  "difficulty.related.name": { "en": "🔀 A Related Word (Easiest)", "es": "🔀 Una Palabra Relacionada (Más Fácil)", "ca": "🔀 Una Paraula Relacionada (Més Fàcil)" },
+  "difficulty.related.desc": { "en": "The Impostor sees a different item from the same category, with its own photo.", "es": "El Impostor ve un elemento distinto de la misma categoría, con su propia foto.", "ca": "L'Impostor veu un element diferent de la mateixa categoria, amb la seva pròpia foto." },
+
+  "startGameBtn": { "en": "Start Game", "es": "Empezar Partida", "ca": "Comença la Partida" },
+
+  "footerMadeBy": { "en": "Made with ❤️ by", "es": "Hecho con ❤️ por", "ca": "Fet amb ❤️ per" },
+  "footerCheckOut": { "en": "Check out more projects on", "es": "Descubre más proyectos en", "ca": "Descobreix més projectes a" },
+
+  "passToLabel": { "en": "Pass to", "es": "Pasa a", "ca": "Passa a" },
+  "readyBtn": { "en": "I'm Ready", "es": "Estoy Listo", "ca": "Estic Llest" },
+
+  "tapToRevealText": { "en": "Tap below to see your role", "es": "Toca abajo para ver tu rol", "ca": "Toca a sota per veure el teu rol" },
+  "showRoleBtn": { "en": "Show My Role", "es": "Mostrar Mi Rol", "ca": "Mostra el Meu Rol" },
+  "doneBtn": { "en": "Done — I've Seen It", "es": "Hecho — Ya Lo He Visto", "ca": "Fet — Ja Ho He Vist" },
+
+  "roleCitizen": { "en": "✓ CITIZEN", "es": "✓ CIUDADANO", "ca": "✓ CIUTADÀ" },
+  "roleImpostor": { "en": "🎭 IMPOSTOR", "es": "🎭 IMPOSTOR", "ca": "🎭 IMPOSTOR" },
+  "roleFactpostor": { "en": "🎭 FACTPOSTOR", "es": "🎭 FACTPOSTOR", "ca": "🎭 FACTPOSTOR" },
+
+  "factpostorBlindMessage": { "en": "You are the Factpostor! Invent a plausible-sounding fake fact and blend in with the Citizens. Don't reveal that you're the impostor!", "es": "¡Eres el Factpostor! Inventa un dato falso que suene creíble y mézclate con los Ciudadanos. ¡No reveles que eres el impostor!", "ca": "Ets el Factpostor! Inventa't una dada falsa que soni creïble i barreja't amb els Ciutadans. No revelis que ets l'impostor!" },
+  "classicBlindMessage": { "en": "You are the Impostor! You don't know the secret word. Listen closely, bluff convincingly, and try to blend in without getting caught.", "es": "¡Eres el Impostor! No conoces la palabra secreta. Escucha con atención, farolea con convicción e intenta pasar desapercibido.", "ca": "Ets l'Impostor! No coneixes la paraula secreta. Escolta amb atenció, fes un farol convincent i intenta passar desapercebut." },
+
+  "categoryHintLabel": { "en": "Your hint — the category is:", "es": "Tu pista — la categoría es:", "ca": "La teva pista — la categoria és:" },
+  "relatedHintLabel": { "en": "Your hint — a related item:", "es": "Tu pista — un elemento relacionado:", "ca": "La teva pista — un element relacionat:" },
+
+  "viewOnWikipedia": { "en": "View source on Wikipedia", "es": "Ver fuente en Wikipedia", "ca": "Veure font a la Viquipèdia" },
+
+  "rolesAssignedTitle": { "en": "✨ Roles Assigned!", "es": "✨ ¡Roles Asignados!", "ca": "✨ Rols Assignats!" },
+  "revealResultsBtn": { "en": "Reveal Results", "es": "Revelar Resultados", "ca": "Revela els Resultats" },
+
+  "instructionsTitle": { "en": "How to Play:", "es": "Cómo Jugar:", "ca": "Com Jugar:" },
+  "instructions.facts.1": { "en": "Citizens: Discuss your fact without revealing it directly", "es": "Ciudadanos: Comentad vuestro dato sin revelarlo directamente", "ca": "Ciutadans: Comenteu la vostra dada sense revelar-la directament" },
+  "instructions.facts.2": { "en": "Factpostors: Invent a believable fake fact and blend in", "es": "Factpostors: Inventad un dato falso creíble y mezclaos", "ca": "Factpostors: Inventeu una dada falsa creïble i barregeu-vos" },
+  "instructions.facts.3": { "en": "Vote on who you think the Factpostors are", "es": "Votad quién creéis que son los Factpostors", "ca": "Voteu qui creieu que són els Factpostors" },
+  "instructions.facts.4": { "en": "When done, tap \"Reveal Results\" to see everyone's roles", "es": "Al terminar, toca \"Revelar Resultados\" para ver todos los roles", "ca": "En acabar, toca \"Revela els Resultats\" per veure tots els rols" },
+  "instructions.classic.1": { "en": "Citizens: Say things related to the secret word without saying it", "es": "Ciudadanos: Decid cosas relacionadas con la palabra secreta sin decirla", "ca": "Ciutadans: Digueu coses relacionades amb la paraula secreta sense dir-la" },
+  "instructions.classic.2": { "en": "Impostor: Bluff convincingly using any hints you got", "es": "Impostor: Farolea con convicción usando las pistas que tengas", "ca": "Impostor: Fes un farol convincent amb les pistes que tinguis" },
+  "instructions.classic.3": { "en": "Vote on who you think the Impostor is", "es": "Votad quién creéis que es el Impostor", "ca": "Voteu qui creieu que és l'Impostor" },
+  "instructions.classic.4": { "en": "When done, tap \"Reveal Results\" to see the word and everyone's roles", "es": "Al terminar, toca \"Revelar Resultados\" para ver la palabra y los roles", "ca": "En acabar, toca \"Revela els Resultats\" per veure la paraula i els rols" },
+  "instructions.famous.1": { "en": "Citizens: Describe the famous person without naming them", "es": "Ciudadanos: Describid al personaje famoso sin nombrarlo", "ca": "Ciutadans: Descriviu el personatge famós sense anomenar-lo" },
+  "instructions.famous.2": { "en": "Impostor: Bluff convincingly using any hints you got", "es": "Impostor: Farolea con convicción usando las pistas que tengas", "ca": "Impostor: Fes un farol convincent amb les pistes que tinguis" },
+  "instructions.famous.3": { "en": "Vote on who you think the Impostor is", "es": "Votad quién creéis que es el Impostor", "ca": "Voteu qui creieu que és l'Impostor" },
+  "instructions.famous.4": { "en": "When done, tap \"Reveal Results\" to see who it was and everyone's roles", "es": "Al terminar, toca \"Revelar Resultados\" para ver quién era y los roles", "ca": "En acabar, toca \"Revela els Resultats\" per veure qui era i els rols" },
+
+  "resultsTitle": { "en": "📊 Game Results", "es": "📊 Resultados de la Partida", "ca": "📊 Resultats de la Partida" },
+  "whoHadWhatTitle": { "en": "Who Had What:", "es": "Quién Tenía Qué:", "ca": "Qui Tenia Què:" },
+  "secretWordWasTitle": { "en": "The secret was:", "es": "El secreto era:", "ca": "El secret era:" },
+  "newRoundBtn": { "en": "New Round", "es": "Nueva Ronda", "ca": "Nova Ronda" },
+  "newGameBtn": { "en": "New Game", "es": "Nueva Partida", "ca": "Nova Partida" },
+
+  "modal.title": { "en": "📖 How to Play FACTPOSTOR", "es": "📖 Cómo Jugar a FACTPOSTOR", "ca": "📖 Com Jugar a FACTPOSTOR" },
+  "modal.modesTitle": { "en": "🎮 Three Game Modes", "es": "🎮 Tres Modos de Juego", "ca": "🎮 Tres Modes de Joc" },
+  "modal.modesText": { "en": "<strong>Facts:</strong> each Citizen gets a different true fact; Factpostors get nothing and must invent one.<br><strong>Classic Impostor:</strong> all Citizens get the same secret word and photo; the Impostor gets nothing, a category hint, or a related word, depending on difficulty.<br><strong>Famous People:</strong> same as Classic, but with real famous people instead of words.", "es": "<strong>Datos Curiosos:</strong> cada Ciudadano recibe un dato distinto; los Factpostors no reciben nada y deben inventarse uno.<br><strong>Impostor Clásico:</strong> todos los Ciudadanos reciben la misma palabra secreta y foto; el Impostor recibe nada, una pista de categoría o una palabra relacionada, según la dificultad.<br><strong>Personajes Famosos:</strong> igual que el Clásico, pero con personas famosas reales en vez de palabras.", "ca": "<strong>Dades Curioses:</strong> cada Ciutadà rep una dada diferent; els Factpostors no reben res i se n'han d'inventar una.<br><strong>Impostor Clàssic:</strong> tots els Ciutadans reben la mateixa paraula secreta i foto; l'Impostor rep res, una pista de categoria o una paraula relacionada, segons la dificultat.<br><strong>Personatges Famosos:</strong> igual que el Clàssic, però amb persones famoses reals en lloc de paraules." },
+  "modal.objectiveTitle": { "en": "🎯 Objective", "es": "🎯 Objetivo", "ca": "🎯 Objectiu" },
+  "modal.objectiveText": { "en": "<strong>Citizens:</strong> Identify and vote out the Impostor(s)<br><strong>Impostor(s):</strong> Blend in and survive without being caught", "es": "<strong>Ciudadanos:</strong> Identificad y votad para expulsar al/los Impostor(es)<br><strong>Impostor(es):</strong> Mezclaos y sobrevivid sin que os descubran", "ca": "<strong>Ciutadans:</strong> Identifiqueu i voteu per expulsar l'Impostor/s<br><strong>Impostor/s:</strong> Barregeu-vos i sobreviviu sense que us descobreixin" },
+  "modal.flowTitle": { "en": "🎮 Game Flow", "es": "🎮 Flujo del Juego", "ca": "🎮 Flux del Joc" },
+  "modal.flow.1": { "en": "Choose a mode, language and enter player names", "es": "Elige un modo, idioma e introduce los nombres", "ca": "Tria un mode, idioma i introdueix els noms" },
+  "modal.flow.2": { "en": "Pass the device around. Each player taps \"Show My Role\" privately", "es": "Pasa el dispositivo. Cada jugador toca \"Mostrar Mi Rol\" en privado", "ca": "Passa el dispositiu. Cada jugador toca \"Mostra el Meu Rol\" en privat" },
+  "modal.flow.3": { "en": "Declarations: hint at what you know without stating it directly", "es": "Declaraciones: da pistas sobre lo que sabes sin decirlo directamente", "ca": "Declaracions: dona pistes sobre el que saps sense dir-ho directament" },
+  "modal.flow.4": { "en": "Discussion: ask questions, challenge suspicious statements", "es": "Discusión: haced preguntas, cuestionad afirmaciones sospechosas", "ca": "Discussió: feu preguntes, qüestioneu afirmacions sospitoses" },
+  "modal.flow.5": { "en": "Vote: everyone points to who they think is the Impostor", "es": "Votación: todos señalan a quien creen que es el Impostor", "ca": "Votació: tothom assenyala qui creu que és l'Impostor" },
+  "modal.flow.6": { "en": "Results: reveal all roles and the secret", "es": "Resultados: se revelan todos los roles y el secreto", "ca": "Resultats: es revelen tots els rols i el secret" },
+  "modal.tipsTitle": { "en": "💡 Tips", "es": "💡 Consejos", "ca": "💡 Consells" },
+  "modal.tipsCitizens": { "en": "<strong>For Citizens:</strong> Be specific. Vague statements make you look suspicious!", "es": "<strong>Para Ciudadanos:</strong> Sed específicos. ¡Las afirmaciones vagas os hacen sospechosos!", "ca": "<strong>Per als Ciutadans:</strong> Sigueu específics. Les afirmacions vagues us fan sospitosos!" },
+  "modal.tipsImpostors": { "en": "<strong>For Impostors:</strong> Listen carefully and build on what others say. Stay calm and confident!", "es": "<strong>Para Impostores:</strong> Escuchad con atención y aprovechad lo que dicen los demás. ¡Mantened la calma!", "ca": "<strong>Per als Impostors:</strong> Escolteu amb atenció i aprofiteu el que diuen els altres. Manteniu la calma!" },
+  "modal.scoringTitle": { "en": "🏆 Scoring", "es": "🏆 Puntuación", "ca": "🏆 Puntuació" },
+  "modal.scoring.1": { "en": "Impostor eliminated → Citizens +1 each", "es": "Impostor eliminado → Ciudadanos +1 cada uno", "ca": "Impostor eliminat → Ciutadans +1 cadascun" },
+  "modal.scoring.2": { "en": "Citizen eliminated → Surviving Impostors +2 each", "es": "Ciudadano eliminado → Impostores supervivientes +2 cada uno", "ca": "Ciutadà eliminat → Impostors supervivents +2 cadascun" },
+  "modal.scoring.3": { "en": "Impostor survives the round → Impostor +3 bonus", "es": "El Impostor sobrevive la ronda → Bono de +3 para el Impostor", "ca": "L'Impostor sobreviu la ronda → Bo de +3 per a l'Impostor" },
+  "modal.quickRefTitle": { "en": "Quick Reference", "es": "Referencia Rápida", "ca": "Referència Ràpida" },
+  "modal.playersHeader": { "en": "Players", "es": "Jugadores", "ca": "Jugadors" },
+  "modal.impostorsHeader": { "en": "Recommended Impostors", "es": "Impostores Recomendados", "ca": "Impostors Recomanats" },
+  "modal.gotIt": { "en": "Got It!", "es": "¡Entendido!", "ca": "Entesos!" },
+
+  "imageLoadFailed": { "en": "Photo unavailable", "es": "Foto no disponible", "ca": "Foto no disponible" }
+}

@@ -564,9 +564,9 @@ tr:last-child td {
 
 /* How to Play Button */
 .btn-link {
-    background: transparent;
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary-color);
+    border: 2px solid rgba(99, 102, 241, 0.25);
     padding: 10px 20px;
     margin-bottom: 20px;
     font-size: 1rem;
@@ -574,8 +574,8 @@ tr:last-child td {
 }
 
 .btn-link:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: white;
+    background: rgba(99, 102, 241, 0.18);
+    border-color: var(--primary-color);
     transform: none;
 }
 
@@ -747,6 +747,174 @@ tr:last-child td {
 .rules-quick-ref th:last-child,
 .rules-quick-ref td:last-child {
     text-align: center;
+}
+
+/* Language Switcher */
+.lang-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.lang-btn {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 2px solid var(--border-color);
+    background: white;
+    color: var(--text-light);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.lang-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.lang-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Mode / Difficulty Selection */
+.mode-grid,
+.difficulty-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 16px 0 30px;
+}
+
+.mode-card,
+.difficulty-card {
+    padding: 16px 20px;
+    border-radius: 14px;
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+}
+
+.mode-card:hover,
+.difficulty-card:hover {
+    border-color: var(--primary-color);
+    background: var(--bg-light);
+}
+
+.mode-card.active,
+.difficulty-card.active {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%);
+}
+
+.mode-card-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+    color: var(--text-dark);
+}
+
+.mode-card-desc {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.4;
+}
+
+/* Photo Card */
+.photo-card {
+    margin: 16px 0;
+    text-align: center;
+}
+
+.photo-img-wrap {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 4 / 3;
+    margin: 0 auto;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.photo-img-wrap.loading {
+    background: linear-gradient(90deg, var(--bg-light) 25%, #e5e9f0 50%, var(--bg-light) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.photo-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-img-wrap.photo-fallback {
+    font-size: 3.5rem;
+}
+
+.photo-source-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    text-decoration: underline;
+}
+
+.photo-unavailable-label {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Round content display */
+.hint-label {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.secret-word {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+}
+
+.fact-text {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+.blind-message {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+.instructions-list {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.instructions-list li {
+    margin: 15px 0;
+    line-height: 1.6;
 }
 
 /* Modal Responsive */

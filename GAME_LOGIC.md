@@ -2,13 +2,34 @@
 
 > *"A lie is just a fact that hasn't been believed yet."*
 
-A social deduction party game for **3–10 players** where truth is weaponized, lies are dressed up in science clothing, and everyone ends up learning something — except possibly the wrong thing.
+A social deduction party game for **3–10 players**, playable in **English, Español, and Català**, where truth is weaponized, lies are dressed up in science clothing, and everyone ends up learning something — except possibly the wrong thing.
 
 ---
 
-## What Is This Game?
+## Three Modes
 
-**Factpostor** is a variant of the classic Impostor/Undercover word game. Instead of sharing a secret word, players are given **a random true fact** — except for the Impostors, who receive nothing but the knowledge that they are lying scoundrels.
+Factpostor ships with three interchangeable modes. All three share the same core loop (secret assignment → pass-and-reveal → discussion → vote → results) — only *what* the Citizens and Impostor(s) get told changes.
+
+### 🧠 Facts
+The original mode. Every Citizen gets **a different true fact** (with a photo). Impostors ("Factpostors") get nothing at all and must invent a plausible-sounding fake fact on the spot.
+
+### 🎭 Classic Impostor
+The traditional Impostor/Undercover format. Every Citizen gets **the same secret word**, illustrated with a photo. Before starting, the host picks how much the Impostor knows:
+
+| Difficulty | What the Impostor sees |
+|---|---|
+| 😶 Nothing (hardest) | Just that they're the Impostor |
+| 🏷️ The Category | The category name + a representative photo (e.g. "Animals" 🦁), but not the specific word |
+| 🔀 A Related Word (easiest) | A *different* word from the same category, with its own photo — real information, just the wrong one |
+
+### ⭐ Famous People
+Identical structure to Classic Impostor, except the secret is a real, famous person (with photo) instead of a word — same three difficulty tiers apply.
+
+---
+
+## What Is This Game? (Facts Mode)
+
+**Facts mode** is a variant of the classic Impostor/Undercover word game. Instead of sharing a secret word, players are given **a random true fact** — except for the Impostors, who receive nothing but the knowledge that they are lying scoundrels.
 
 The Impostors must invent a **plausible-sounding fake fact** on the spot and blend in with the honest players. Everyone then discusses and votes to expose them.
 
@@ -218,15 +239,17 @@ This web application implements FACTPOSTOR as a **single-device, in-person game*
 ### App Flow
 
 ```
+[Host picks language, mode, and (Classic/Famous) difficulty]
+        ↓
 [Host enters player names]
         ↓
-[App picks facts + assigns roles silently]
+[App assigns roles + secret content silently, fetching photos from Wikipedia]
         ↓
 [Phone passed around: each player taps "Show my role", reads, taps "Done"]
         ↓
 [Game plays out in real life: Declarations → Discussion → Reveal → Vote]
         ↓
-[App reveals all roles and facts]
+[App reveals all roles and the secret]
         ↓
 [Option to start new round or new game]
 ```
