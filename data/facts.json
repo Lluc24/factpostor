@@ -307,7 +307,7 @@
   },
   {
     "id": "king-of-hearts-no-mustache",
-    "subject": "Suicide King",
+    "subject": "Playing card",
     "text": {
       "en": "The King of Hearts is the only king in a deck of cards without a mustache.",
       "es": "El Rey de Corazones es el único rey de la baraja sin bigote.",
@@ -487,7 +487,7 @@
   },
   {
     "id": "twitter-bird-name-larry",
-    "subject": "Larry the Bird",
+    "subject": "Twitter",
     "text": {
       "en": "The Twitter bird's official name is Larry.",
       "es": "El nombre oficial del pájaro de Twitter es Larry.",
