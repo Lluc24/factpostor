@@ -13,15 +13,15 @@
     "buildings": { "icon": "🏰", "wikiTitle": "Building", "name": { "en": "Buildings", "es": "Edificios", "ca": "Edificis" } }
   },
   "famous": {
-    "science": { "icon": "🔬", "wikiTitle": "Science", "name": { "en": "Science", "es": "Ciencia", "ca": "Ciència" } },
+    "science": { "icon": "🔬", "wikiTitle": "Scientist", "name": { "en": "Science", "es": "Ciencia", "ca": "Ciència" } },
     "history_politics": { "icon": "📜", "wikiTitle": "History", "name": { "en": "History & Politics", "es": "Historia y Política", "ca": "Història i Política" } },
     "art_literature": { "icon": "🎨", "wikiTitle": "Art", "name": { "en": "Art & Literature", "es": "Arte y Literatura", "ca": "Art i Literatura" } },
     "music": { "icon": "🎵", "wikiTitle": "Music", "name": { "en": "Music", "es": "Música", "ca": "Música" } },
     "film_tv": { "icon": "🎬", "wikiTitle": "Film", "name": { "en": "Film & TV", "es": "Cine y TV", "ca": "Cinema i TV" } },
     "sports": { "icon": "🏆", "wikiTitle": "Sport", "name": { "en": "Sports", "es": "Deportes", "ca": "Esports" } },
-    "exploration": { "icon": "🧭", "wikiTitle": "Exploration", "name": { "en": "Exploration", "es": "Exploración", "ca": "Exploració" } },
+    "exploration": { "icon": "🧭", "wikiTitle": "Sextant", "name": { "en": "Exploration", "es": "Exploración", "ca": "Exploració" } },
     "business_tech": { "icon": "💼", "wikiTitle": "Business", "name": { "en": "Business & Tech", "es": "Negocios y Tecnología", "ca": "Negocis i Tecnologia" } },
-    "royalty": { "icon": "👑", "wikiTitle": "Monarchy", "name": { "en": "Royalty", "es": "Realeza", "ca": "Reialesa" } },
+    "royalty": { "icon": "👑", "wikiTitle": "Crown (headgear)", "name": { "en": "Royalty", "es": "Realeza", "ca": "Reialesa" } },
     "activism": { "icon": "✊", "wikiTitle": "Activism", "name": { "en": "Activism", "es": "Activismo", "ca": "Activisme" } }
   }
 }

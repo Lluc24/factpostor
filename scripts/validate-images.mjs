@@ -39,30 +39,50 @@ for (const [modeName, cats] of Object.entries(categories)) {
 }
 
 const USER_AGENT = 'Factpostor-DataValidator/1.0 (https://github.com/Lluc24/factpostor; party-game data QA script)';
-const CONCURRENCY = 8;
+const CONCURRENCY = 3;
+const MAX_RETRIES = 5;
+
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 async function checkOne({ source, title }) {
     const url = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(title.replace(/ /g, '_'));
-    try {
-        const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' } });
-        if (res.status === 404) {
-            return { source, title, level: 'ERROR', reason: 'Article not found (404)' };
+
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+        try {
+            const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' } });
+
+            if (res.status === 429) {
+                const retryAfter = Number(res.headers.get('retry-after')) || 0;
+                const backoffMs = Math.max(retryAfter * 1000, 500 * 2 ** attempt);
+                await sleep(backoffMs);
+                continue; // retry
+            }
+            if (res.status === 404) {
+                return { source, title, level: 'ERROR', reason: 'Article not found (404)' };
+            }
+            if (!res.ok) {
+                return { source, title, level: 'ERROR', reason: `HTTP ${res.status}` };
+            }
+            const data = await res.json();
+            if (data.type === 'disambiguation') {
+                return { source, title, level: 'ERROR', reason: 'Resolves to a disambiguation page' };
+            }
+            const hasImage = !!(data.thumbnail && data.thumbnail.source) || !!(data.originalimage && data.originalimage.source);
+            if (!hasImage) {
+                return { source, title, level: 'WARN', reason: 'Article exists but has no lead image' };
+            }
+            return null;
+        } catch (e) {
+            if (attempt === MAX_RETRIES) {
+                return { source, title, level: 'ERROR', reason: `Fetch failed: ${e.message}` };
+            }
+            await sleep(500 * 2 ** attempt);
         }
-        if (!res.ok) {
-            return { source, title, level: 'ERROR', reason: `HTTP ${res.status}` };
-        }
-        const data = await res.json();
-        if (data.type === 'disambiguation') {
-            return { source, title, level: 'ERROR', reason: 'Resolves to a disambiguation page' };
-        }
-        const hasImage = !!(data.thumbnail && data.thumbnail.source) || !!(data.originalimage && data.originalimage.source);
-        if (!hasImage) {
-            return { source, title, level: 'WARN', reason: 'Article exists but has no lead image' };
-        }
-        return null;
-    } catch (e) {
-        return { source, title, level: 'ERROR', reason: `Fetch failed: ${e.message}` };
     }
+
+    return { source, title, level: 'ERROR', reason: 'Repeatedly rate-limited (429) after retries' };
 }
 
 async function runPool(items, worker, concurrency) {
@@ -72,6 +92,7 @@ async function runPool(items, worker, concurrency) {
         while (index < items.length) {
             const i = index++;
             results[i] = await worker(items[i]);
+            await sleep(120); // stay well under Wikimedia's anonymous rate limits
         }
     }
     await Promise.all(Array.from({ length: concurrency }, next));

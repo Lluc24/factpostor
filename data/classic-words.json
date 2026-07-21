@@ -119,7 +119,7 @@
   { "id": "sand-dune", "category": "nature", "wikiTitle": "Sand dune", "name": { "en": "Sand Dune", "es": "Duna", "ca": "Duna" } },
   { "id": "geyser", "category": "nature", "wikiTitle": "Geyser", "name": { "en": "Geyser", "es": "Géiser", "ca": "Guèiser" } },
 
-  { "id": "electric-guitar", "category": "entertainment", "wikiTitle": "Electric guitar", "name": { "en": "Electric Guitar", "es": "Guitarra eléctrica", "ca": "Guitarra elèctrica" } },
+  { "id": "electric-guitar", "category": "entertainment", "wikiTitle": "Fender Stratocaster", "name": { "en": "Electric Guitar", "es": "Guitarra eléctrica", "ca": "Guitarra elèctrica" } },
   { "id": "piano", "category": "entertainment", "wikiTitle": "Piano", "name": { "en": "Piano", "es": "Piano", "ca": "Piano" } },
   { "id": "drum-kit", "category": "entertainment", "wikiTitle": "Drum kit", "name": { "en": "Drum Kit", "es": "Batería", "ca": "Bateria" } },
   { "id": "carousel", "category": "entertainment", "wikiTitle": "Carousel", "name": { "en": "Carousel", "es": "Carrusel", "ca": "Carrusel" } },
