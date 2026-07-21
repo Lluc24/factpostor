@@ -1,0 +1,32 @@
+name: Validate game data
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build data bundle (schema + duplicate checks)
+        run: node scripts/build-data.mjs
+
+      - name: Check generated bundle is up to date
+        run: |
+          if ! git diff --quiet -- js/data.bundle.js; then
+            echo "js/data.bundle.js is out of date. Run 'node scripts/build-data.mjs' and commit the result." >&2
+            git diff -- js/data.bundle.js
+            exit 1
+          fi
+
+      - name: Validate Wikipedia image sources
+        run: node scripts/validate-images.mjs

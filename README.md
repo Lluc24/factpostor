@@ -1,12 +1,16 @@
 # 🕵️ FACTPOSTOR
 
-A web-based social deduction party game where players must distinguish truth from fiction. Citizens defend real facts while Factpostors blend in with believable lies.
+A web-based social deduction party game with **three modes**, in **English, Español, and Català**. Players must bluff, deduce, and vote out the impostor(s) hiding among them.
 
 > *"A lie is just a fact that hasn't been believed yet."*
 
 ## 🎮 What is Factpostor?
 
-Factpostor is a single-device party game for 3-10 players. Each round, players receive either a true fact (Citizens) or nothing at all (Factpostors). The Factpostors must invent plausible fake facts on the spot and blend in with the honest players. After discussion, everyone votes to expose the impostors.
+Factpostor is a single-device party game for 3-10 players, playable in three modes:
+
+- **🧠 Facts** — every Citizen gets a different true fact (with a photo). Factpostors get nothing and must invent a believable one on the spot.
+- **🎭 Classic Impostor** — every Citizen gets the *same* secret word and photo. The Impostor gets nothing, a category hint, or a related-but-different word, depending on the difficulty you pick.
+- **⭐ Famous People** — same as Classic Impostor, but the secret is a real, famous person instead of a word.
 
 Perfect for:
 - Party games and social gatherings
@@ -16,91 +20,123 @@ Perfect for:
 
 ## ✨ Features
 
-- 🎲 **Random Role Assignment**: Automatic, fair role distribution
+- 🌍 **Three Languages**: full English / Español / Català support, switchable any time from the home screen
+- 🎲 **Three Game Modes**: Facts, Classic Impostor, Famous People — each with its own item pool
+- 🖼️ **Real Photos**: every item is illustrated with a photo fetched live from Wikipedia
+- 🎚️ **Adjustable Difficulty** (Classic/Famous modes): Impostor sees nothing, a category hint, or a related decoy item
 - 📱 **Single Device**: Pass-and-play on one phone or tablet
 - 🔒 **Private Reveals**: Secure role viewing system
-- 🎯 **160+ Curated Facts**: Hand-picked interesting, verifiable facts
-- 💯 **No Installation**: Works directly in your browser
-- 🌐 **Offline Ready**: No internet connection required after initial load
-- 📊 **Multi-Round Support**: Play multiple rounds with persistent player tracking
+- 💯 **No Installation, No Build Step**: Works directly in your browser, zero dependencies
+- 📊 **Large Content Library**: ~165 facts, ~150 classic words, ~150 famous people — see [Content Library](#-content-library) below
 
 ## 🚀 Quick Start
 
 ### Option 1: Open Directly
 Simply open `index.html` in any modern web browser:
 ```bash
-# Navigate to the project directory
 cd factpostor
-
-# Open in your default browser (macOS)
-open index.html
-
-# Or (Linux)
-xdg-open index.html
-
-# Or (Windows)
-start index.html
+open index.html        # macOS
+xdg-open index.html    # Linux
+start index.html       # Windows
 ```
 
 ### Option 2: Local Server
-For the best experience, serve via a local HTTP server:
-
 ```bash
-# Using Python 3
 python3 -m http.server 8000
-
-# Using Node.js (http-server)
-npx http-server -p 8000
-
-# Using PHP
-php -S localhost:8000
+# or: npx http-server -p 8000
 ```
+Then open `http://localhost:8000`.
 
-Then open `http://localhost:8000` in your browser.
+Both options work identically — this is a fully static site with no build step required to *play* it. Photos are fetched live from Wikipedia, so an internet connection is needed to see them; the game itself (roles, text, voting) still works offline, just without photos.
 
 ## 📖 How to Play
 
 ### Setup
-1. One player opens the app on their device
-2. Enter all player names (3-10 players recommended)
-3. Choose number of Factpostors or use auto mode
+1. One player opens the app, picks a language and a game mode
+2. (Classic/Famous modes) Pick a difficulty for the Impostor
+3. Enter all player names (3-10 players recommended) and choose the number of Impostors, or leave it on Auto
 4. Start the game
 
 ### Role Reveal
-1. Pass the device around the table
-2. Each player taps "Show My Role" to see their assignment privately
-3. **Citizens** see a true fact
-4. **Factpostors** see only that they're the impostor
-5. Tap "Done" to hide and pass to the next player
+Pass the device around the table. Each player taps **"Show My Role"** to see their assignment privately, then **"Done"** to hide it and pass the device on. The screen never shows anything sensitive while in transit.
 
 ### Gameplay (In-Person)
-1. **Declarations** (2-4 min): Each player hints at their fact without revealing it directly
-2. **Discussion** (3-5 min): Ask questions, challenge suspicious statements, form theories
-3. **Revelation** (1 min): Each player states their full fact
-4. **Vote**: Point to who you think is a Factpostor
-5. **Results**: Reveal all roles and facts
+1. **Declarations**: each player hints at what they know without stating it outright
+2. **Discussion**: ask questions, challenge suspicious statements
+3. **Vote**: point to whoever you think is an Impostor
+4. **Results**: tap "Reveal Results" to see every role and the secret
 
-### Scoring
-- Factpostor eliminated → Citizens +1 each
-- Citizen eliminated → Surviving Factpostors +2 each
-- Additional bonus points for especially clever play
+See [GAME_LOGIC.md](GAME_LOGIC.md) for the full ruleset, scoring, and variants.
+
+## 🖼️ Content Library & Photos
+
+All game content lives in `data/*.json`:
+
+| File | Contents |
+|---|---|
+| `data/facts.json` | ~165 true facts, each with an English/Spanish/Catalan translation and a Wikipedia subject for its photo |
+| `data/classic-words.json` | ~150 everyday words/objects across 11 categories (food, animals, sports, professions, landmarks, technology, transportation, nature, entertainment, objects, buildings) |
+| `data/famous-people.json` | ~150 real, famous people across 10 categories (science, history & politics, art & literature, music, film & TV, sports, exploration, business & tech, royalty, activism) |
+| `data/categories.json` | Category labels/icons/representative photo for the "category hint" difficulty |
+| `data/i18n.json` | All UI strings in English/Spanish/Catalan |
+
+**No photos are stored in this repository.** Every photo is fetched at runtime from Wikipedia's public REST API (`https://en.wikipedia.org/api/rest_v1/page/summary/<title>`), using the free-licensed image on that article's page. This keeps the repo tiny, keeps the content easy to audit/extend, and avoids any copyright issues with hosting third-party photos ourselves. Each photo links back to its Wikipedia source. If an image can't be loaded (offline, or an article has no photo), the game shows a neutral placeholder instead of a broken image.
+
+### Adding more items
+1. Edit the relevant file in `data/` (add an object with the same shape as its neighbors — `id`, and either `wikiTitle`/`name` or `subject`/`text`, using the **exact** English Wikipedia article title so the photo lookup works).
+2. Regenerate the browser-loadable bundle:
+   ```bash
+   node scripts/build-data.mjs
+   ```
+   This merges everything in `data/` into `js/data.bundle.js`, which is what `index.html` actually loads (plain JSON can't be `fetch()`-ed when the page is opened via `file://`, so we bundle it into a script instead).
+3. Optionally validate that your new Wikipedia titles actually resolve and have a photo:
+   ```bash
+   node scripts/validate-images.mjs
+   ```
+   This calls the live Wikipedia API, so it needs real internet access — it also runs automatically in CI on every push (see `.github/workflows/validate-data.yml`).
+
+## 🌐 Deploying to GitHub Pages
+
+This is a static site, so GitHub Pages can serve it directly with no build step:
+
+1. Push your changes to the `main` branch.
+2. On GitHub, go to **Settings → Pages**.
+3. Under **Build and deployment → Source**, choose **Deploy from a branch**.
+4. Under **Branch**, choose `main` and folder `/ (root)`, then **Save**.
+5. GitHub will publish the site at `https://<your-username>.github.io/<repo-name>/` within a minute or two.
+
+Every future push to `main` automatically updates the live site — there's nothing else to configure.
 
 ## 🛠️ Technical Details
 
 ### Tech Stack
-- **Frontend**: Vanilla JavaScript (ES6+)
+- **Frontend**: Vanilla JavaScript (ES6+), no frameworks
 - **Styling**: CSS3 with custom properties
-- **Architecture**: Client-side only, no backend required
+- **Architecture**: Client-side only; the only network calls at runtime are read-only photo lookups against Wikipedia's public API
+- **Data**: Plain JSON authored by hand, bundled into a static script by a tiny zero-dependency Node script (only needed when *editing* content, not to play)
 
 ### File Structure
 ```
 factpostor/
-├── index.html          # Main application structure
-├── app.js              # Game logic and state management
-├── facts.js            # Curated fact database (160+ facts)
-├── styles.css          # UI styling and responsive design
-├── README.md           # This file
-└── GAME_LOGIC.md       # Detailed game rules and design
+├── index.html                        # App structure (all screens + modal)
+├── app.js                            # Game engine: modes, difficulty, role assignment, rendering
+├── styles.css                        # UI styling and responsive design
+├── js/
+│   ├── data.bundle.js                # Generated from data/*.json — do not edit directly
+│   ├── i18n.js                       # Translation lookup helper
+│   └── images.js                     # Live Wikipedia photo fetching + caching + fallback UI
+├── data/
+│   ├── facts.json                    # Facts mode content
+│   ├── classic-words.json            # Classic Impostor mode content
+│   ├── famous-people.json            # Famous People mode content
+│   ├── categories.json               # Category labels/icons/photos
+│   └── i18n.json                     # UI strings (en/es/ca)
+├── scripts/
+│   ├── build-data.mjs                # data/*.json -> js/data.bundle.js
+│   └── validate-images.mjs           # Checks every Wikipedia title actually resolves
+├── .github/workflows/validate-data.yml  # CI: rebuilds + validates data on every push
+├── README.md
+└── GAME_LOGIC.md                     # Detailed game rules and design
 ```
 
 ### Browser Compatibility
@@ -109,34 +145,12 @@ factpostor/
 - ✅ Safari 14+
 - ✅ Mobile browsers (iOS Safari, Chrome Mobile)
 
-### No Dependencies
-This project uses zero external dependencies. Everything runs with plain HTML, CSS, and JavaScript.
-
 ## 🎨 Customization
 
-### Adding Your Own Facts
-Edit `facts.js` and add facts to the `FACTS` array:
-
-```javascript
-const FACTS = [
-    "Your new interesting fact here.",
-    "Another surprising fact.",
-    // ... more facts
-];
-```
-
-**Good facts should be:**
-- Verifiable and genuinely true
-- Specific (include numbers, names, dates)
-- Surprising to most people
-- Standalone (no context required)
-
-### Styling
-Modify `styles.css` to change colors, fonts, and layout. CSS custom properties are defined at the top for easy theming:
-
+CSS custom properties are defined at the top of `styles.css` for easy theming:
 ```css
 :root {
-    --primary-color: #6366f1;
+    --primary-color: #3b82f6;
     --secondary-color: #8b5cf6;
     /* ... more variables */
 }
@@ -144,35 +158,16 @@ Modify `styles.css` to change colors, fonts, and layout. CSS custom properties a
 
 ## 🧪 Development
 
-### Running Locally
-No build process required! Just edit the files and refresh your browser.
-
-### Adding Features
-The game state is managed in `app.js` through the `gameState` object:
-
-```javascript
-let gameState = {
-    players: [],              // Array of player names
-    impostorCount: 'auto',    // Number of Factpostors
-    roundData: null,          // Current round data
-    currentPlayerIndex: 0     // Current player in reveal phase
-};
-```
-
-## 📚 Documentation
-
-- **[GAME_LOGIC.md](GAME_LOGIC.md)**: Complete game rules, strategy guide, variants, and design philosophy
-- **Game Screens**: Home → Pass Screen → Role Reveal → Game Ready → Results
+No build process is required to *play* the game — just edit the files and refresh your browser. A build step (`node scripts/build-data.mjs`) is only needed after editing anything under `data/`.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here are some ideas:
-
-- Add more curated facts to `facts.js`
+Ideas for contributions:
+- Add more items to `data/facts.json`, `data/classic-words.json`, or `data/famous-people.json` (see [Adding more items](#adding-more-items))
+- Add another language
 - Improve mobile responsiveness
-- Add sound effects and animations
+- Add a category filter to narrow the item pool before starting
 - Implement scoring across multiple rounds
-- Create themed fact packs
 - Add accessibility features
 
 ## 📝 License
@@ -181,27 +176,17 @@ MIT License - feel free to use, modify, and distribute this game.
 
 ## 🎯 Credits
 
-Created as an implementation of the social deduction party game genre, inspired by games like Mafia, Werewolf, and Undercover.
-
-## 🐛 Known Issues
-
-- Voting is currently manual (in-person) - digital voting feature planned
-- Score tracking across rounds is basic - enhanced scoreboard planned
-- No persistent storage - games reset on page reload
+Created as an implementation of the social deduction party game genre, inspired by games like Mafia, Werewolf, and Undercover. Photos courtesy of Wikipedia and the Wikimedia Commons contributors.
 
 ## 🔮 Future Enhancements
 
 - [ ] Persistent scoreboard across multiple rounds
-- [ ] Fact categories and themed rounds
+- [ ] Category filters within each mode
 - [ ] Digital voting interface
 - [ ] Timer for each game phase
 - [ ] PWA support for offline installation
-- [ ] Difficulty levels (easy/medium/hard facts)
-- [ ] Statistics and player analytics
-- [ ] Export game history
+- [ ] More languages
 
 ---
 
 **Ready to play?** Open `index.html` and start your first game!
-
-For detailed rules and strategy tips, see [GAME_LOGIC.md](GAME_LOGIC.md).

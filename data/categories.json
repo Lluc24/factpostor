@@ -1,0 +1,27 @@
+{
+  "classic": {
+    "food": { "icon": "🍕", "wikiTitle": "Food", "name": { "en": "Food", "es": "Comida", "ca": "Menjar" } },
+    "animals": { "icon": "🦁", "wikiTitle": "Animal", "name": { "en": "Animals", "es": "Animales", "ca": "Animals" } },
+    "sports": { "icon": "⚽", "wikiTitle": "Sport", "name": { "en": "Sports", "es": "Deportes", "ca": "Esports" } },
+    "professions": { "icon": "👷", "wikiTitle": "Uniform", "name": { "en": "Professions", "es": "Profesiones", "ca": "Professions" } },
+    "landmarks": { "icon": "🗼", "wikiTitle": "Landmark", "name": { "en": "Landmarks", "es": "Monumentos", "ca": "Monuments" } },
+    "technology": { "icon": "💻", "wikiTitle": "Technology", "name": { "en": "Technology", "es": "Tecnología", "ca": "Tecnologia" } },
+    "transportation": { "icon": "🚀", "wikiTitle": "Transport", "name": { "en": "Transportation", "es": "Transporte", "ca": "Transport" } },
+    "nature": { "icon": "🌋", "wikiTitle": "Nature", "name": { "en": "Nature", "es": "Naturaleza", "ca": "Natura" } },
+    "entertainment": { "icon": "🎪", "wikiTitle": "Entertainment", "name": { "en": "Entertainment", "es": "Entretenimiento", "ca": "Entreteniment" } },
+    "objects": { "icon": "🔧", "wikiTitle": "Gadget", "name": { "en": "Everyday Objects", "es": "Objetos Cotidianos", "ca": "Objectes Quotidians" } },
+    "buildings": { "icon": "🏰", "wikiTitle": "Building", "name": { "en": "Buildings", "es": "Edificios", "ca": "Edificis" } }
+  },
+  "famous": {
+    "science": { "icon": "🔬", "wikiTitle": "Scientist", "name": { "en": "Science", "es": "Ciencia", "ca": "Ciència" } },
+    "history_politics": { "icon": "📜", "wikiTitle": "History", "name": { "en": "History & Politics", "es": "Historia y Política", "ca": "Història i Política" } },
+    "art_literature": { "icon": "🎨", "wikiTitle": "Art", "name": { "en": "Art & Literature", "es": "Arte y Literatura", "ca": "Art i Literatura" } },
+    "music": { "icon": "🎵", "wikiTitle": "Music", "name": { "en": "Music", "es": "Música", "ca": "Música" } },
+    "film_tv": { "icon": "🎬", "wikiTitle": "Film", "name": { "en": "Film & TV", "es": "Cine y TV", "ca": "Cinema i TV" } },
+    "sports": { "icon": "🏆", "wikiTitle": "Sport", "name": { "en": "Sports", "es": "Deportes", "ca": "Esports" } },
+    "exploration": { "icon": "🧭", "wikiTitle": "Sextant", "name": { "en": "Exploration", "es": "Exploración", "ca": "Exploració" } },
+    "business_tech": { "icon": "💼", "wikiTitle": "Business", "name": { "en": "Business & Tech", "es": "Negocios y Tecnología", "ca": "Negocis i Tecnologia" } },
+    "royalty": { "icon": "👑", "wikiTitle": "Crown (headgear)", "name": { "en": "Royalty", "es": "Realeza", "ca": "Reialesa" } },
+    "activism": { "icon": "✊", "wikiTitle": "Activism", "name": { "en": "Activism", "es": "Activismo", "ca": "Activisme" } }
+  }
+}

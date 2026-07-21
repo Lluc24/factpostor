@@ -11,39 +11,80 @@
         <!-- Home Screen -->
         <div id="home-screen" class="screen active">
             <div class="container">
-                <h1 class="logo">🕵️ FACTPOSTOR</h1>
-                <p class="tagline">"A lie is just a fact that hasn't been believed yet."</p>
-                
-                <button id="how-to-play-btn" class="btn btn-link" style="background-color: rgb(255, 159, 250);">📖 How to Play</button>
-                
+                <div class="lang-switcher" id="lang-switcher">
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="es">ES</button>
+                    <button class="lang-btn" data-lang="ca">CA</button>
+                </div>
+
+                <h1 class="logo" data-i18n="appTitle">🕵️ FACTPOSTOR</h1>
+                <p class="tagline" data-i18n="tagline"></p>
+
+                <button id="how-to-play-btn" class="btn btn-link" data-i18n="howToPlayBtn"></button>
+
                 <div class="setup-form">
-                    <h2>Setup Game</h2>
-                    
-                    <div class="form-group">
-                        <label for="player-input">Player Names</label>
-                        <div class="player-input-group">
-                            <input type="text" id="player-input" placeholder="Enter player name">
-                            <button id="add-player-btn" class="btn btn-secondary">Add</button>
+                    <h2 data-i18n="modeSelectLabel"></h2>
+                    <div class="mode-grid" id="mode-grid">
+                        <div class="mode-card active" data-mode="facts">
+                            <div class="mode-card-name" data-i18n="mode.facts.name"></div>
+                            <div class="mode-card-desc" data-i18n="mode.facts.desc"></div>
+                        </div>
+                        <div class="mode-card" data-mode="classic">
+                            <div class="mode-card-name" data-i18n="mode.classic.name"></div>
+                            <div class="mode-card-desc" data-i18n="mode.classic.desc"></div>
+                        </div>
+                        <div class="mode-card" data-mode="famous">
+                            <div class="mode-card-name" data-i18n="mode.famous.name"></div>
+                            <div class="mode-card-desc" data-i18n="mode.famous.desc"></div>
                         </div>
                     </div>
-                    
-                    <div id="player-list" class="player-list"></div>
-                    
+
+                    <div id="difficulty-section" class="hidden">
+                        <h2 data-i18n="difficultyLabel"></h2>
+                        <div class="difficulty-grid" id="difficulty-grid">
+                            <div class="difficulty-card active" data-difficulty="blind">
+                                <div class="mode-card-name" data-i18n="difficulty.blind.name"></div>
+                                <div class="mode-card-desc" data-i18n="difficulty.blind.desc"></div>
+                            </div>
+                            <div class="difficulty-card" data-difficulty="category">
+                                <div class="mode-card-name" data-i18n="difficulty.category.name"></div>
+                                <div class="mode-card-desc" data-i18n="difficulty.category.desc"></div>
+                            </div>
+                            <div class="difficulty-card" data-difficulty="related">
+                                <div class="mode-card-name" data-i18n="difficulty.related.name"></div>
+                                <div class="mode-card-desc" data-i18n="difficulty.related.desc"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 data-i18n="setupTitle"></h2>
+
                     <div class="form-group">
-                        <label for="impostor-count">Number of Factpostors</label>
+                        <label for="player-input" data-i18n="playerNameLabel"></label>
+                        <div class="player-input-group">
+                            <input type="text" id="player-input" data-i18n-placeholder="playerNamePlaceholder">
+                            <button id="add-player-btn" class="btn btn-secondary" data-i18n="addBtn"></button>
+                        </div>
+                    </div>
+
+                    <div id="player-list" class="player-list"></div>
+                    <p class="instruction" id="min-players-hint" data-i18n="minPlayersHint"></p>
+
+                    <div class="form-group">
+                        <label for="impostor-count" data-i18n="impostorCountLabel"></label>
                         <select id="impostor-count">
-                            <option value="auto">Auto (Recommended)</option>
+                            <option value="auto" data-i18n="impostorAuto"></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                         </select>
                     </div>
-                    
-                    <button id="start-game-btn" class="btn btn-primary" disabled>Start Game</button>
-                    
+
+                    <button id="start-game-btn" class="btn btn-primary" disabled data-i18n="startGameBtn"></button>
+
                     <div id="footer" style="margin-top: 40px; font-size: 0.9em; color: #555;">
-                        <p>Made with ❤️ by <a href="https://linktr.ee/lluc_santamaria" target="_blank">Lluc Santamaria</a>
-                        </br>Check out more projects on <a href="https://github.com/Lluc24" target="_blank">GitHub</a></p>
+                        <p><span data-i18n="footerMadeBy"></span> <a href="https://linktr.ee/lluc_santamaria" target="_blank">Lluc Santamaria</a>
+                        </br><span data-i18n="footerCheckOut"></span> <a href="https://github.com/Lluc24" target="_blank">GitHub</a></p>
                     </div>
                 </div>
             </div>
@@ -53,9 +94,9 @@
         <div id="pass-screen" class="screen">
             <div class="container centered">
                 <div class="pass-prompt">
-                    <h2>Pass to</h2>
+                    <h2 data-i18n="passToLabel"></h2>
                     <div class="player-name-large" id="next-player-name"></div>
-                    <button id="ready-btn" class="btn btn-primary">I'm Ready</button>
+                    <button id="ready-btn" class="btn btn-primary" data-i18n="readyBtn"></button>
                 </div>
             </div>
         </div>
@@ -68,11 +109,11 @@
                         <h2 id="player-current-name"></h2>
                         <div id="role-badge" class="role-badge"></div>
                         <div id="fact-display" class="fact-display"></div>
-                        <button id="done-reveal-btn" class="btn btn-primary">Done — I've Seen It</button>
+                        <button id="done-reveal-btn" class="btn btn-primary" data-i18n="doneBtn"></button>
                     </div>
                     <div id="tap-to-reveal">
-                        <p>Tap below to see your role</p>
-                        <button id="show-role-btn" class="btn btn-large">Show My Role</button>
+                        <p data-i18n="tapToRevealText"></p>
+                        <button id="show-role-btn" class="btn btn-large" data-i18n="showRoleBtn"></button>
                     </div>
                 </div>
             </div>
@@ -81,38 +122,54 @@
         <!-- Game Ready Screen -->
         <div id="game-ready-screen" class="screen">
             <div class="container centered">
-                <h1>✨ Roles Assigned!</h1>
-                <p class="instruction">Everyone has seen their role. Now play the game by discussing and voting in person.</p>
-                
+                <h1 data-i18n="rolesAssignedTitle"></h1>
+
                 <div class="game-instructions">
                     <div class="instruction-box">
-                        <h3>How to Play:</h3>
-                        <ol>
-                            <li><strong>Citizens:</strong> Discuss your fact without revealing it directly</li>
-                            <li><strong>Factpostors:</strong> Invent a believable fake fact and blend in</li>
-                            <li>Vote on who you think the Factpostors are</li>
-                            <li>When done, tap "Reveal Results" to see everyone's roles</li>
+                        <h3 data-i18n="instructionsTitle"></h3>
+                        <ol id="instructions-facts" class="instructions-list hidden">
+                            <li data-i18n="instructions.facts.1"></li>
+                            <li data-i18n="instructions.facts.2"></li>
+                            <li data-i18n="instructions.facts.3"></li>
+                            <li data-i18n="instructions.facts.4"></li>
+                        </ol>
+                        <ol id="instructions-classic" class="instructions-list hidden">
+                            <li data-i18n="instructions.classic.1"></li>
+                            <li data-i18n="instructions.classic.2"></li>
+                            <li data-i18n="instructions.classic.3"></li>
+                            <li data-i18n="instructions.classic.4"></li>
+                        </ol>
+                        <ol id="instructions-famous" class="instructions-list hidden">
+                            <li data-i18n="instructions.famous.1"></li>
+                            <li data-i18n="instructions.famous.2"></li>
+                            <li data-i18n="instructions.famous.3"></li>
+                            <li data-i18n="instructions.famous.4"></li>
                         </ol>
                     </div>
                 </div>
-                
-                <button id="reveal-results-btn" class="btn btn-primary btn-large">Reveal Results</button>
+
+                <button id="reveal-results-btn" class="btn btn-primary btn-large" data-i18n="revealResultsBtn"></button>
             </div>
         </div>
 
         <!-- Results Screen -->
         <div id="results-screen" class="screen">
             <div class="container">
-                <h2>📊 Game Results</h2>
-                
+                <h2 data-i18n="resultsTitle"></h2>
+
+                <div id="secret-reveal-banner" class="true-fact-reveal hidden">
+                    <h3 data-i18n="secretWordWasTitle"></h3>
+                    <div id="secret-reveal-content"></div>
+                </div>
+
                 <div class="all-roles">
-                    <h3>Who Had What:</h3>
+                    <h3 data-i18n="whoHadWhatTitle"></h3>
                     <div id="all-roles-list"></div>
                 </div>
-                
+
                 <div class="button-group">
-                    <button id="new-round-btn" class="btn btn-primary">New Round</button>
-                    <button id="new-game-btn" class="btn btn-secondary">New Game</button>
+                    <button id="new-round-btn" class="btn btn-primary" data-i18n="newRoundBtn"></button>
+                    <button id="new-game-btn" class="btn btn-secondary" data-i18n="newGameBtn"></button>
                 </div>
             </div>
         </div>
@@ -121,56 +178,53 @@
         <div id="how-to-play-modal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>📖 How to Play FACTPOSTOR</h2>
+                    <h2 data-i18n="modal.title"></h2>
                     <button id="close-modal-btn" class="close-btn">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="rules-section">
-                        <h3>🎯 Objective</h3>
-                        <p><strong>Citizens:</strong> Identify and vote out the Factpostors<br>
-                        <strong>Factpostors:</strong> Blend in and survive without being caught</p>
+                        <h3 data-i18n="modal.modesTitle"></h3>
+                        <p data-i18n-html="modal.modesText"></p>
                     </div>
 
                     <div class="rules-section">
-                        <h3>👥 Roles</h3>
-                        <p><strong>✓ Citizen</strong> - Receives a true fact. Discuss it without revealing directly.</p>
-                        <p><strong>🎭 Factpostor</strong> - Receives nothing. Must invent a believable fake fact on the spot.</p>
+                        <h3 data-i18n="modal.objectiveTitle"></h3>
+                        <p data-i18n-html="modal.objectiveText"></p>
                     </div>
 
                     <div class="rules-section">
-                        <h3>🎮 Game Flow</h3>
+                        <h3 data-i18n="modal.flowTitle"></h3>
                         <ol>
-                            <li><strong>Setup:</strong> Enter player names and start the game</li>
-                            <li><strong>Role Reveal:</strong> Pass the device around. Each player taps "Show My Role" privately</li>
-                            <li><strong>Phase 1 - Declarations (2-4 min):</strong> Each player hints at their fact without stating it directly</li>
-                            <li><strong>Phase 2 - Discussion (3-5 min):</strong> Ask questions, challenge statements, form theories</li>
-                            <li><strong>Phase 3 - Revelation:</strong> Each player states their full fact</li>
-                            <li><strong>Phase 4 - Vote:</strong> Everyone points to who they think is a Factpostor</li>
-                            <li><strong>Results:</strong> Reveal all roles and see the true facts</li>
+                            <li data-i18n="modal.flow.1"></li>
+                            <li data-i18n="modal.flow.2"></li>
+                            <li data-i18n="modal.flow.3"></li>
+                            <li data-i18n="modal.flow.4"></li>
+                            <li data-i18n="modal.flow.5"></li>
+                            <li data-i18n="modal.flow.6"></li>
                         </ol>
                     </div>
 
                     <div class="rules-section">
-                        <h3>💡 Tips</h3>
-                        <p><strong>For Citizens:</strong> Be specific about your fact. Vague statements make you look suspicious!</p>
-                        <p><strong>For Factpostors:</strong> Listen carefully to Citizens and build a fact in a similar domain. Stay calm and confident!</p>
+                        <h3 data-i18n="modal.tipsTitle"></h3>
+                        <p data-i18n-html="modal.tipsCitizens"></p>
+                        <p data-i18n-html="modal.tipsImpostors"></p>
                     </div>
 
                     <div class="rules-section">
-                        <h3>🏆 Scoring</h3>
+                        <h3 data-i18n="modal.scoringTitle"></h3>
                         <ul>
-                            <li>Factpostor eliminated → Citizens +1 each</li>
-                            <li>Citizen eliminated → Surviving Factpostors +2 each</li>
-                            <li>Factpostor survives → Factpostor +3 bonus</li>
+                            <li data-i18n="modal.scoring.1"></li>
+                            <li data-i18n="modal.scoring.2"></li>
+                            <li data-i18n="modal.scoring.3"></li>
                         </ul>
                     </div>
 
                     <div class="rules-quick-ref">
-                        <h4>Quick Reference</h4>
+                        <h4 data-i18n="modal.quickRefTitle"></h4>
                         <table>
                             <tr>
-                                <th>Players</th>
-                                <th>Recommended Factpostors</th>
+                                <th data-i18n="modal.playersHeader"></th>
+                                <th data-i18n="modal.impostorsHeader"></th>
                             </tr>
                             <tr><td>3-4</td><td>1</td></tr>
                             <tr><td>5-7</td><td>1-2</td></tr>
@@ -179,13 +233,15 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="close-modal-footer-btn" class="btn btn-primary">Got It!</button>
+                    <button id="close-modal-footer-btn" class="btn btn-primary" data-i18n="modal.gotIt"></button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="facts.js"></script>
+    <script src="js/data.bundle.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/images.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
