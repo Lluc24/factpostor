@@ -15,18 +15,25 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
+          cache: 'npm'
 
-      - name: Build data bundle (schema + duplicate checks)
-        run: node scripts/build-data.mjs
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Check generated bundle is up to date
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build data bundle (schema + duplicate checks) and app bundles
+        run: npm run build
+
+      - name: Check generated bundles are up to date
         run: |
-          if ! git diff --quiet -- js/data.bundle.js; then
-            echo "js/data.bundle.js is out of date. Run 'node scripts/build-data.mjs' and commit the result." >&2
-            git diff -- js/data.bundle.js
+          if ! git diff --quiet -- js/data.bundle.js js/i18n.js js/images.js app.js; then
+            echo "Generated files are out of date. Run 'npm run build' and commit the result." >&2
+            git diff -- js/data.bundle.js js/i18n.js js/images.js app.js
             exit 1
           fi
 
       - name: Validate Wikipedia image sources
-        run: node scripts/validate-images.mjs
+        run: npm run validate-images

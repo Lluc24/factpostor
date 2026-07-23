@@ -1,0 +1,23 @@
+{
+  "name": "factpostor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A web-based social deduction party game with three modes, in English, Español, and Català.",
+  "scripts": {
+    "build:data": "tsx scripts/build-data.ts",
+    "build:app": "tsx scripts/build-app.ts",
+    "build": "npm run build:data && npm run build:app",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.scripts.json --noEmit",
+    "validate-images": "tsx scripts/validate-images.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "esbuild": "^0.28.1",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  }
+}

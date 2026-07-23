@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env -S npx tsx
 // Verifies every wikiTitle referenced by the game's data files resolves to a
 // real Wikipedia article with a usable photo, via the same public REST API
 // the deployed game uses at runtime:
@@ -8,31 +8,42 @@
 // It is intentionally run in GitHub Actions (see .github/workflows/validate-data.yml)
 // rather than expected to pass in every local/sandboxed dev environment.
 //
-// Usage: node scripts/validate-images.mjs
+// Usage: npm run validate-images
 
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import type { CategoriesData, FactItem, NamedWikiItem } from '../src/types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 const dataDir = join(root, 'data');
 
-function readJson(name) {
-    return JSON.parse(readFileSync(join(dataDir, name), 'utf-8'));
+function readJson<T>(name: string): T {
+    return JSON.parse(readFileSync(join(dataDir, name), 'utf-8')) as T;
 }
 
-const classicWords = readJson('classic-words.json');
-const famousPeople = readJson('famous-people.json');
-const facts = readJson('facts.json');
-const categories = readJson('categories.json');
+const classicWords = readJson<NamedWikiItem[]>('classic-words.json');
+const famousPeople = readJson<NamedWikiItem[]>('famous-people.json');
+const facts = readJson<FactItem[]>('facts.json');
+const categories = readJson<CategoriesData>('categories.json');
+
+interface Check {
+    source: string;
+    title: string;
+}
+
+interface CheckFailure extends Check {
+    level: 'ERROR' | 'WARN';
+    reason: string;
+}
 
 // Collect every (source, wikiTitle) pair we need to check.
-const checks = [];
+const checks: Check[] = [];
 for (const item of classicWords) checks.push({ source: `classic-words:${item.id}`, title: item.wikiTitle });
 for (const item of famousPeople) checks.push({ source: `famous-people:${item.id}`, title: item.wikiTitle });
 for (const item of facts) checks.push({ source: `facts:${item.id}`, title: item.subject });
-for (const [modeName, cats] of Object.entries(categories)) {
+for (const [modeName, cats] of Object.entries(categories) as [string, Record<string, { wikiTitle: string }>][]) {
     for (const [catId, cat] of Object.entries(cats)) {
         checks.push({ source: `categories.${modeName}:${catId}`, title: cat.wikiTitle });
     }
@@ -42,11 +53,17 @@ const USER_AGENT = 'Factpostor-DataValidator/1.0 (https://github.com/Lluc24/fact
 const CONCURRENCY = 3;
 const MAX_RETRIES = 5;
 
-function sleep(ms) {
+function sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function checkOne({ source, title }) {
+interface WikiSummaryResponse {
+    type?: string;
+    thumbnail?: { source?: string };
+    originalimage?: { source?: string };
+}
+
+async function checkOne({ source, title }: Check): Promise<CheckFailure | null> {
     const url = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(title.replace(/ /g, '_'));
 
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
@@ -65,18 +82,18 @@ async function checkOne({ source, title }) {
             if (!res.ok) {
                 return { source, title, level: 'ERROR', reason: `HTTP ${res.status}` };
             }
-            const data = await res.json();
+            const data = await res.json() as WikiSummaryResponse;
             if (data.type === 'disambiguation') {
                 return { source, title, level: 'ERROR', reason: 'Resolves to a disambiguation page' };
             }
-            const hasImage = !!(data.thumbnail && data.thumbnail.source) || !!(data.originalimage && data.originalimage.source);
+            const hasImage = !!data.thumbnail?.source || !!data.originalimage?.source;
             if (!hasImage) {
                 return { source, title, level: 'WARN', reason: 'Article exists but has no lead image' };
             }
             return null;
         } catch (e) {
             if (attempt === MAX_RETRIES) {
-                return { source, title, level: 'ERROR', reason: `Fetch failed: ${e.message}` };
+                return { source, title, level: 'ERROR', reason: `Fetch failed: ${(e as Error).message}` };
             }
             await sleep(500 * 2 ** attempt);
         }
@@ -85,13 +102,13 @@ async function checkOne({ source, title }) {
     return { source, title, level: 'ERROR', reason: 'Repeatedly rate-limited (429) after retries' };
 }
 
-async function runPool(items, worker, concurrency) {
-    const results = [];
+async function runPool<T, R>(items: T[], worker: (item: T) => Promise<R>, concurrency: number): Promise<R[]> {
+    const results: R[] = [];
     let index = 0;
-    async function next() {
+    async function next(): Promise<void> {
         while (index < items.length) {
             const i = index++;
-            results[i] = await worker(items[i]);
+            results[i] = await worker(items[i]!);
             await sleep(120); // stay well under Wikimedia's anonymous rate limits
         }
     }
@@ -100,10 +117,10 @@ async function runPool(items, worker, concurrency) {
 }
 
 console.log(`Checking ${checks.length} Wikipedia titles (concurrency ${CONCURRENCY})...`);
-const results = (await runPool(checks, checkOne, CONCURRENCY)).filter(Boolean);
+const results = (await runPool(checks, checkOne, CONCURRENCY)).filter((r): r is CheckFailure => r !== null);
 
-const errors = results.filter(r => r.level === 'ERROR');
-const warnings = results.filter(r => r.level === 'WARN');
+const errors = results.filter((r) => r.level === 'ERROR');
+const warnings = results.filter((r) => r.level === 'WARN');
 
 if (warnings.length) {
     console.log(`\n--- ${warnings.length} WARNING(S) (article exists, no image — fallback UI will show) ---`);

@@ -26,7 +26,7 @@ Perfect for:
 - 🎚️ **Adjustable Difficulty** (Classic/Famous modes): Impostor sees nothing, a category hint, or a related decoy item
 - 📱 **Single Device**: Pass-and-play on one phone or tablet
 - 🔒 **Private Reveals**: Secure role viewing system
-- 💯 **No Installation, No Build Step**: Works directly in your browser, zero dependencies
+- 💯 **No Installation, No Build Step to Play**: Works directly in your browser, zero runtime dependencies (the game logic is written in TypeScript and compiled to plain JS ahead of time — see [Development](#-development))
 - 📊 **Large Content Library**: ~165 facts, ~150 classic words, ~150 famous people — see [Content Library](#-content-library) below
 
 ## 🚀 Quick Start
@@ -86,12 +86,12 @@ All game content lives in `data/*.json`:
 1. Edit the relevant file in `data/` (add an object with the same shape as its neighbors — `id`, and either `wikiTitle`/`name` or `subject`/`text`, using the **exact** English Wikipedia article title so the photo lookup works).
 2. Regenerate the browser-loadable bundle:
    ```bash
-   node scripts/build-data.mjs
+   npm run build:data
    ```
    This merges everything in `data/` into `js/data.bundle.js`, which is what `index.html` actually loads (plain JSON can't be `fetch()`-ed when the page is opened via `file://`, so we bundle it into a script instead).
 3. Optionally validate that your new Wikipedia titles actually resolve and have a photo:
    ```bash
-   node scripts/validate-images.mjs
+   npm run validate-images
    ```
    This calls the live Wikipedia API, so it needs real internet access — it also runs automatically in CI on every push (see `.github/workflows/validate-data.yml`).
 
@@ -110,21 +110,28 @@ Every future push to `main` automatically updates the live site — there's noth
 ## 🛠️ Technical Details
 
 ### Tech Stack
-- **Frontend**: Vanilla JavaScript (ES6+), no frameworks
+- **Frontend**: TypeScript (strict mode), compiled ahead of time to plain ES2019 JavaScript with [esbuild](https://esbuild.github.io/) — no frameworks, and no build step or dependencies required to *play* the deployed game
 - **Styling**: CSS3 with custom properties
 - **Architecture**: Client-side only; the only network calls at runtime are read-only photo lookups against Wikipedia's public API
-- **Data**: Plain JSON authored by hand, bundled into a static script by a tiny zero-dependency Node script (only needed when *editing* content, not to play)
+- **Data**: Plain JSON authored by hand, bundled into a static script by a small typed Node script (only needed when *editing* content, not to play)
 
 ### File Structure
 ```
 factpostor/
 ├── index.html                        # App structure (all screens + modal)
-├── app.js                            # Game engine: modes, difficulty, role assignment, rendering
+├── app.js                            # Generated from src/app.ts — game engine: modes, difficulty, role assignment, rendering
 ├── styles.css                        # UI styling and responsive design
+├── src/
+│   ├── types.ts                      # Shared data/domain types (no DOM dependency)
+│   ├── dom-types.ts                  # Browser-facing API types (FactpostorI18n, FactpostorImages)
+│   ├── global.d.ts                   # Window global augmentation for the data bundle + helper APIs
+│   ├── i18n.ts                       # Translation lookup helper
+│   ├── images.ts                     # Live Wikipedia photo fetching + caching + fallback UI
+│   └── app.ts                        # Game engine source
 ├── js/
 │   ├── data.bundle.js                # Generated from data/*.json — do not edit directly
-│   ├── i18n.js                       # Translation lookup helper
-│   └── images.js                     # Live Wikipedia photo fetching + caching + fallback UI
+│   ├── i18n.js                       # Generated from src/i18n.ts — do not edit directly
+│   └── images.js                     # Generated from src/images.ts — do not edit directly
 ├── data/
 │   ├── facts.json                    # Facts mode content
 │   ├── classic-words.json            # Classic Impostor mode content
@@ -132,9 +139,12 @@ factpostor/
 │   ├── categories.json               # Category labels/icons/photos
 │   └── i18n.json                     # UI strings (en/es/ca)
 ├── scripts/
-│   ├── build-data.mjs                # data/*.json -> js/data.bundle.js
-│   └── validate-images.mjs           # Checks every Wikipedia title actually resolves
-├── .github/workflows/validate-data.yml  # CI: rebuilds + validates data on every push
+│   ├── build-data.ts                 # data/*.json -> js/data.bundle.js
+│   ├── build-app.ts                  # src/*.ts -> js/i18n.js, js/images.js, app.js (via esbuild)
+│   └── validate-images.ts            # Checks every Wikipedia title actually resolves
+├── tsconfig.json                     # Browser src/ typecheck config (DOM lib)
+├── tsconfig.scripts.json             # Node scripts/ typecheck config
+├── .github/workflows/validate-data.yml  # CI: typechecks, rebuilds + validates data/app bundles on every push
 ├── README.md
 └── GAME_LOGIC.md                     # Detailed game rules and design
 ```
@@ -158,7 +168,17 @@ CSS custom properties are defined at the top of `styles.css` for easy theming:
 
 ## 🧪 Development
 
-No build process is required to *play* the game — just edit the files and refresh your browser. A build step (`node scripts/build-data.mjs`) is only needed after editing anything under `data/`.
+No build process is required to *play* the game — `index.html` loads plain, pre-built JS (`app.js`, `js/i18n.js`, `js/images.js`, `js/data.bundle.js`), so you can just open it and refresh your browser.
+
+To work on the game logic itself, edit the TypeScript sources under `src/` (game engine, i18n, image loading) or the Node scripts under `scripts/`, then rebuild:
+
+```bash
+npm install       # one-time: installs TypeScript, esbuild, tsx
+npm run typecheck # type-check src/ and scripts/
+npm run build     # data/*.json -> js/data.bundle.js, src/*.ts -> js/i18n.js, js/images.js, app.js
+```
+
+Commit the regenerated files in `js/` and `app.js` along with your source changes — CI checks that they're up to date (see `.github/workflows/validate-data.yml`). A build step (`npm run build:data`) is also needed after editing anything under `data/`.
 
 ## 🤝 Contributing
 
