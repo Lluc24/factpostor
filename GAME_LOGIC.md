@@ -115,7 +115,9 @@ Once everyone has seen their role, give players **60 seconds of silence** to thi
 
 ### Phase 1 — The Declarations (2–4 minutes)
 
-Going around the table (random order recommended), each player states **one thing** related to their fact, without revealing the fact directly. Think of it as a hint, an anecdote, a tangent, or an elaboration.
+Once every role has been revealed, the app randomly picks and announces **who starts** — nothing more. The table decides the rest of the speaking order together from there.
+
+Going around from the starting player, each player states **one thing** related to their fact, without revealing the fact directly. Think of it as a hint, an anecdote, a tangent, or an elaboration.
 
 **Citizens** should speak naturally about their true fact — adding context, expressing surprise, connecting it to something else.
 

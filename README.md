@@ -26,6 +26,7 @@ Perfect for:
 - 🎚️ **Adjustable Difficulty** (Classic/Famous modes): Impostor sees nothing, a category hint, or a related decoy item
 - 📱 **Single Device**: Pass-and-play on one phone or tablet
 - 🔒 **Private Reveals**: Secure role viewing system
+- 🎤 **Random Starting Player**: once every role is revealed, the app announces who starts the round — the table decides the rest of the turn order themselves
 - 💯 **No Installation, No Build Step to Play**: Works directly in your browser, zero runtime dependencies (the game logic is written in TypeScript and compiled to plain JS ahead of time — see [Development](#-development))
 - 📊 **Large Content Library**: ~165 facts, ~150 classic words, ~150 famous people — see [Content Library](#-content-library) below
 
