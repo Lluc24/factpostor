@@ -157,7 +157,8 @@
       roles: {},
       content: {},
       impostors,
-      secret: null
+      secret: null,
+      startingPlayer: gameState.players[Math.floor(Math.random() * gameState.players.length)]
     };
     if (gameState.mode === "facts") {
       setupFactsRound(citizens, impostors);
@@ -219,6 +220,7 @@
     ["facts", "classic", "famous"].forEach((mode) => {
       byId(`instructions-${mode}`).classList.toggle("hidden", mode !== gameState.mode);
     });
+    byId("starting-player-name").textContent = gameState.roundData.startingPlayer;
   }
   function showRoleReveal() {
     showScreen("reveal-screen");

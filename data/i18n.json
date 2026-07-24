@@ -56,6 +56,9 @@
   "rolesAssignedTitle": { "en": "✨ Roles Assigned!", "es": "✨ ¡Roles Asignados!", "ca": "✨ Rols Assignats!" },
   "revealResultsBtn": { "en": "Reveal Results", "es": "Revelar Resultados", "ca": "Revela els Resultats" },
 
+  "startingPlayerTitle": { "en": "🎤 Who Starts", "es": "🎤 Quién Empieza", "ca": "🎤 Qui Comença" },
+  "startingPlayerHint": { "en": "The rest of the turn order is up to you — decide it together.", "es": "El resto del orden lo decidís vosotros.", "ca": "La resta de l'ordre el decidiu vosaltres." },
+
   "instructionsTitle": { "en": "How to Play:", "es": "Cómo Jugar:", "ca": "Com Jugar:" },
   "instructions.facts.1": { "en": "Citizens: Discuss your fact without revealing it directly", "es": "Ciudadanos: Comentad vuestro dato sin revelarlo directamente", "ca": "Ciutadans: Comenteu la vostra dada sense revelar-la directament" },
   "instructions.facts.2": { "en": "Factpostors: Invent a believable fake fact and blend in", "es": "Factpostors: Inventad un dato falso creíble y mezclaos", "ca": "Factpostors: Inventeu una dada falsa creïble i barregeu-vos" },

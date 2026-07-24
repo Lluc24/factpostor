@@ -531,6 +531,19 @@ tr:last-child td {
     text-align: left;
 }
 
+.starting-player-box {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.starting-player-box h3 {
+    text-align: center;
+}
+
+.starting-player-box .instruction {
+    margin-bottom: 0;
+}
+
 .instruction-box h3 {
     margin-top: 0;
     color: var(--primary-color);

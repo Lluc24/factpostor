@@ -56,6 +56,7 @@ export interface RoundData {
     content: Record<string, RoundContent>;
     impostors: string[];
     secret: NamedWikiItem | null;
+    startingPlayer: string;
 }
 
 export interface GameState {

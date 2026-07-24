@@ -215,7 +215,8 @@ function startGame(): void {
         roles: {},
         content: {},
         impostors,
-        secret: null
+        secret: null,
+        startingPlayer: gameState.players[Math.floor(Math.random() * gameState.players.length)]!
     };
 
     if (gameState.mode === 'facts') {
@@ -290,6 +291,7 @@ function showGameReadyScreen(): void {
     (['facts', 'classic', 'famous'] as const).forEach((mode) => {
         byId(`instructions-${mode}`).classList.toggle('hidden', mode !== gameState.mode);
     });
+    byId('starting-player-name').textContent = gameState.roundData!.startingPlayer;
 }
 
 function showRoleReveal(): void {
