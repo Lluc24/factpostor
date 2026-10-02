@@ -9,7 +9,8 @@
     "build:app": "tsx scripts/build-app.ts",
     "build": "npm run build:data && npm run build:app",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.scripts.json --noEmit",
-    "validate-images": "tsx scripts/validate-images.ts"
+    "validate-images": "tsx scripts/validate-images.ts",
+    "test": "tsx --test tests/*.test.ts"
   },
   "keywords": [],
   "author": "",
