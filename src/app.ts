@@ -9,6 +9,7 @@ import type {
     Role,
     RoundContent
 } from './types.js';
+import { buildRound } from './round.js';
 
 function byId<T extends HTMLElement = HTMLElement>(id: string): T {
     return document.getElementById(id) as T;
@@ -188,90 +189,21 @@ function getCategoriesForMode(mode: GameMode): Record<string, CategoryInfo> | nu
     return null;
 }
 
-function shuffled<T>(arr: T[]): T[] {
-    return [...arr].sort(() => Math.random() - 0.5);
-}
-
-function computeImpostorCount(playerCount: number, setting: ImpostorCountSetting): number {
-    if (setting === 'auto') {
-        if (playerCount <= 4) return 1;
-        if (playerCount <= 7) return Math.floor(Math.random() * 2) + 1; // 1-2
-        return Math.floor(Math.random() * 2) + 2; // 2-3
-    }
-    return Math.min(parseInt(setting, 10), Math.max(1, playerCount - 2));
-}
-
 // Game Setup
 function startGame(): void {
     gameState.impostorCount = byId<HTMLSelectElement>('impostor-count').value as ImpostorCountSetting;
 
-    const impostorCount = computeImpostorCount(gameState.players.length, gameState.impostorCount);
-
-    const shuffledPlayers = shuffled(gameState.players);
-    const impostors = shuffledPlayers.slice(0, impostorCount);
-    const citizens = shuffledPlayers.slice(impostorCount);
-
-    gameState.roundData = {
-        roles: {},
-        content: {},
-        impostors,
-        secret: null,
-        startingPlayer: gameState.players[Math.floor(Math.random() * gameState.players.length)]!
-    };
-
-    if (gameState.mode === 'facts') {
-        setupFactsRound(citizens, impostors);
-    } else {
-        setupSharedSecretRound(citizens, impostors);
-    }
+    gameState.roundData = buildRound({
+        mode: gameState.mode,
+        difficulty: gameState.difficulty,
+        players: gameState.players,
+        impostorCount: gameState.impostorCount,
+        facts: window.FACTS_DATA,
+        deck: getDeckForMode(gameState.mode)
+    });
 
     gameState.currentPlayerIndex = 0;
     showPassScreen();
-}
-
-function setupFactsRound(citizens: string[], impostors: string[]): void {
-    const roundData = gameState.roundData!;
-    const facts: FactItem[] = shuffled(window.FACTS_DATA);
-
-    citizens.forEach((player, index) => {
-        roundData.roles[player] = 'citizen';
-        roundData.content[player] = { type: 'fact', fact: facts[index % facts.length]! };
-    });
-
-    impostors.forEach((player) => {
-        roundData.roles[player] = 'impostor';
-        roundData.content[player] = { type: 'blind' };
-    });
-}
-
-function setupSharedSecretRound(citizens: string[], impostors: string[]): void {
-    const roundData = gameState.roundData!;
-    const deck = getDeckForMode(gameState.mode)!;
-    const secretItem = deck[Math.floor(Math.random() * deck.length)]!;
-    roundData.secret = secretItem;
-
-    citizens.forEach((player) => {
-        roundData.roles[player] = 'citizen';
-        roundData.content[player] = { type: 'secret', item: secretItem };
-    });
-
-    let relatedItem: NamedWikiItem | null = null;
-    if (gameState.difficulty === 'related') {
-        const sameCategory = deck.filter((i) => i.category === secretItem.category && i.id !== secretItem.id);
-        const pool = sameCategory.length ? sameCategory : deck.filter((i) => i.id !== secretItem.id);
-        relatedItem = pool[Math.floor(Math.random() * pool.length)]!;
-    }
-
-    impostors.forEach((player) => {
-        roundData.roles[player] = 'impostor';
-        if (gameState.difficulty === 'category') {
-            roundData.content[player] = { type: 'category', category: secretItem.category };
-        } else if (gameState.difficulty === 'related') {
-            roundData.content[player] = { type: 'related', item: relatedItem! };
-        } else {
-            roundData.content[player] = { type: 'blind' };
-        }
-    });
 }
 
 // Role Reveal Flow

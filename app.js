@@ -2,6 +2,77 @@
 
 "use strict";
 (() => {
+  // src/round.ts
+  function randomInt(rng, maxExclusive) {
+    return Math.floor(rng() * maxExclusive);
+  }
+  function shuffled(arr, rng = Math.random) {
+    const out = [...arr];
+    for (let i = out.length - 1; i > 0; i--) {
+      const j = randomInt(rng, i + 1);
+      [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+  }
+  function computeImpostorCount(playerCount, setting, rng = Math.random) {
+    if (setting === "auto") {
+      if (playerCount <= 4) return 1;
+      if (playerCount <= 7) return randomInt(rng, 2) + 1;
+      return randomInt(rng, 2) + 2;
+    }
+    return Math.min(parseInt(setting, 10), Math.max(1, playerCount - 2));
+  }
+  function buildRound(input, rng = Math.random) {
+    const { players } = input;
+    const count = computeImpostorCount(players.length, input.impostorCount, rng);
+    const order = shuffled(players, rng);
+    const impostors = order.slice(0, count);
+    const citizens = order.slice(count);
+    const round = {
+      roles: {},
+      content: {},
+      impostors,
+      secret: null,
+      startingPlayer: players[randomInt(rng, players.length)]
+    };
+    if (input.mode === "facts") {
+      const facts = shuffled(input.facts, rng);
+      citizens.forEach((player, index) => {
+        round.roles[player] = "citizen";
+        round.content[player] = { type: "fact", fact: facts[index % facts.length] };
+      });
+      impostors.forEach((player) => {
+        round.roles[player] = "impostor";
+        round.content[player] = { type: "blind" };
+      });
+      return round;
+    }
+    const deck = input.deck;
+    const secret = deck[randomInt(rng, deck.length)];
+    round.secret = secret;
+    citizens.forEach((player) => {
+      round.roles[player] = "citizen";
+      round.content[player] = { type: "secret", item: secret };
+    });
+    let related = null;
+    if (input.difficulty === "related") {
+      const sameCategory = deck.filter((i) => i.category === secret.category && i.id !== secret.id);
+      const pool = sameCategory.length ? sameCategory : deck.filter((i) => i.id !== secret.id);
+      related = pool[randomInt(rng, pool.length)];
+    }
+    impostors.forEach((player) => {
+      round.roles[player] = "impostor";
+      if (input.difficulty === "category") {
+        round.content[player] = { type: "category", category: secret.category };
+      } else if (related) {
+        round.content[player] = { type: "related", item: related };
+      } else {
+        round.content[player] = { type: "blind" };
+      }
+    });
+    return round;
+  }
+
   // src/app.ts
   function byId(id) {
     return document.getElementById(id);
@@ -136,75 +207,18 @@
     if (mode === "famous") return window.CATEGORIES.famous;
     return null;
   }
-  function shuffled(arr) {
-    return [...arr].sort(() => Math.random() - 0.5);
-  }
-  function computeImpostorCount(playerCount, setting) {
-    if (setting === "auto") {
-      if (playerCount <= 4) return 1;
-      if (playerCount <= 7) return Math.floor(Math.random() * 2) + 1;
-      return Math.floor(Math.random() * 2) + 2;
-    }
-    return Math.min(parseInt(setting, 10), Math.max(1, playerCount - 2));
-  }
   function startGame() {
     gameState.impostorCount = byId("impostor-count").value;
-    const impostorCount = computeImpostorCount(gameState.players.length, gameState.impostorCount);
-    const shuffledPlayers = shuffled(gameState.players);
-    const impostors = shuffledPlayers.slice(0, impostorCount);
-    const citizens = shuffledPlayers.slice(impostorCount);
-    gameState.roundData = {
-      roles: {},
-      content: {},
-      impostors,
-      secret: null,
-      startingPlayer: gameState.players[Math.floor(Math.random() * gameState.players.length)]
-    };
-    if (gameState.mode === "facts") {
-      setupFactsRound(citizens, impostors);
-    } else {
-      setupSharedSecretRound(citizens, impostors);
-    }
+    gameState.roundData = buildRound({
+      mode: gameState.mode,
+      difficulty: gameState.difficulty,
+      players: gameState.players,
+      impostorCount: gameState.impostorCount,
+      facts: window.FACTS_DATA,
+      deck: getDeckForMode(gameState.mode)
+    });
     gameState.currentPlayerIndex = 0;
     showPassScreen();
-  }
-  function setupFactsRound(citizens, impostors) {
-    const roundData = gameState.roundData;
-    const facts = shuffled(window.FACTS_DATA);
-    citizens.forEach((player, index) => {
-      roundData.roles[player] = "citizen";
-      roundData.content[player] = { type: "fact", fact: facts[index % facts.length] };
-    });
-    impostors.forEach((player) => {
-      roundData.roles[player] = "impostor";
-      roundData.content[player] = { type: "blind" };
-    });
-  }
-  function setupSharedSecretRound(citizens, impostors) {
-    const roundData = gameState.roundData;
-    const deck = getDeckForMode(gameState.mode);
-    const secretItem = deck[Math.floor(Math.random() * deck.length)];
-    roundData.secret = secretItem;
-    citizens.forEach((player) => {
-      roundData.roles[player] = "citizen";
-      roundData.content[player] = { type: "secret", item: secretItem };
-    });
-    let relatedItem = null;
-    if (gameState.difficulty === "related") {
-      const sameCategory = deck.filter((i) => i.category === secretItem.category && i.id !== secretItem.id);
-      const pool = sameCategory.length ? sameCategory : deck.filter((i) => i.id !== secretItem.id);
-      relatedItem = pool[Math.floor(Math.random() * pool.length)];
-    }
-    impostors.forEach((player) => {
-      roundData.roles[player] = "impostor";
-      if (gameState.difficulty === "category") {
-        roundData.content[player] = { type: "category", category: secretItem.category };
-      } else if (gameState.difficulty === "related") {
-        roundData.content[player] = { type: "related", item: relatedItem };
-      } else {
-        roundData.content[player] = { type: "blind" };
-      }
-    });
   }
   function showPassScreen() {
     if (gameState.currentPlayerIndex >= gameState.players.length) {
