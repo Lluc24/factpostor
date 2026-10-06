@@ -4,17 +4,12 @@
 
 import type { WikiImageResult } from './types.js';
 import type { FactpostorImagesApi } from './dom-types.js';
+import { lookupFromStatus, parseCachedEntry, parseWikiSummary, type WikiLookup } from './wiki.js';
 
 const WIKI_SUMMARY_BASE = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
-const CACHE_PREFIX = 'fp_img_v1_';
+// v2: drops v1 entries, which could hold a wrongly cached "no image" from a failed request.
+const CACHE_PREFIX = 'fp_img_v2_';
 const memoryCache: Record<string, WikiImageResult | null> = {};
-
-interface WikiSummaryResponse {
-    type?: string;
-    thumbnail?: { source?: string };
-    originalimage?: { source?: string };
-    content_urls?: { desktop?: { page?: string } };
-}
 
 function wikiUrlFor(title: string): string {
     return WIKI_SUMMARY_BASE + encodeURIComponent(title.replace(/ /g, '_'));
@@ -28,32 +23,28 @@ async function fetchWikiImage(wikiTitle: string | null | undefined): Promise<Wik
 
     const storageKey = CACHE_PREFIX + wikiTitle;
     try {
-        const stored = localStorage.getItem(storageKey);
-        if (stored !== null) {
-            const parsed: WikiImageResult | null = stored === '' ? null : JSON.parse(stored);
-            memoryCache[wikiTitle] = parsed;
-            return parsed;
+        const cached = parseCachedEntry(localStorage.getItem(storageKey));
+        if (cached !== undefined) {
+            memoryCache[wikiTitle] = cached;
+            return cached;
         }
     } catch {
         // localStorage unavailable (private browsing, etc.) — just skip caching
     }
 
-    let result: WikiImageResult | null = null;
+    let lookup: WikiLookup = { status: 'error' };
     try {
         const res = await fetch(wikiUrlFor(wikiTitle));
-        if (res.ok) {
-            const data: WikiSummaryResponse = await res.json();
-            const imageUrl = data.thumbnail?.source || data.originalimage?.source || null;
-            if (imageUrl) {
-                const pageUrl = data.content_urls?.desktop?.page ||
-                    ('https://en.wikipedia.org/wiki/' + encodeURIComponent(wikiTitle.replace(/ /g, '_')));
-                result = { imageUrl, pageUrl };
-            }
-        }
+        lookup = res.ok ? parseWikiSummary(await res.json(), wikiTitle) : lookupFromStatus(res.status);
     } catch {
-        // Offline or blocked — fall through to null (placeholder shown instead)
+        // Offline or blocked: stays 'error'
     }
 
+    // Only cache answers from Wikipedia. A network failure or rate limit used to be
+    // stored as "no image", so that photo never loaded again on this device.
+    if (lookup.status === 'error') return null;
+
+    const result = lookup.status === 'found' ? lookup.result : null;
     memoryCache[wikiTitle] = result;
     try {
         localStorage.setItem(storageKey, result ? JSON.stringify(result) : '');
