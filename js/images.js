@@ -2,42 +2,72 @@
 
 "use strict";
 (() => {
+  // src/wiki.ts
+  function isHttpsUrl(value) {
+    if (typeof value !== "string") return false;
+    try {
+      return new URL(value).protocol === "https:";
+    } catch {
+      return false;
+    }
+  }
+  function wikiPageUrl(title) {
+    return "https://en.wikipedia.org/wiki/" + encodeURIComponent(title.replace(/ /g, "_"));
+  }
+  function parseWikiSummary(data, wikiTitle) {
+    var _a, _b, _c, _d;
+    const candidates = [(_a = data == null ? void 0 : data.thumbnail) == null ? void 0 : _a.source, (_b = data == null ? void 0 : data.originalimage) == null ? void 0 : _b.source];
+    const imageUrl = candidates.find(isHttpsUrl);
+    if (!imageUrl) return { status: "missing" };
+    const page = (_d = (_c = data == null ? void 0 : data.content_urls) == null ? void 0 : _c.desktop) == null ? void 0 : _d.page;
+    return { status: "found", result: { imageUrl, pageUrl: isHttpsUrl(page) ? page : wikiPageUrl(wikiTitle) } };
+  }
+  function lookupFromStatus(httpStatus) {
+    return httpStatus === 404 ? { status: "missing" } : { status: "error" };
+  }
+  function parseCachedEntry(stored) {
+    if (stored === null) return void 0;
+    if (stored === "") return null;
+    try {
+      const parsed = JSON.parse(stored);
+      if (parsed && isHttpsUrl(parsed.imageUrl) && isHttpsUrl(parsed.pageUrl)) {
+        return { imageUrl: parsed.imageUrl, pageUrl: parsed.pageUrl };
+      }
+    } catch {
+    }
+    return void 0;
+  }
+
   // src/images.ts
   var WIKI_SUMMARY_BASE = "https://en.wikipedia.org/api/rest_v1/page/summary/";
-  var CACHE_PREFIX = "fp_img_v1_";
+  var CACHE_PREFIX = "fp_img_v2_";
   var memoryCache = {};
   function wikiUrlFor(title) {
     return WIKI_SUMMARY_BASE + encodeURIComponent(title.replace(/ /g, "_"));
   }
   async function fetchWikiImage(wikiTitle) {
-    var _a, _b, _c, _d, _e;
+    var _a;
     if (!wikiTitle) return null;
     if (Object.prototype.hasOwnProperty.call(memoryCache, wikiTitle)) {
       return (_a = memoryCache[wikiTitle]) != null ? _a : null;
     }
     const storageKey = CACHE_PREFIX + wikiTitle;
     try {
-      const stored = localStorage.getItem(storageKey);
-      if (stored !== null) {
-        const parsed = stored === "" ? null : JSON.parse(stored);
-        memoryCache[wikiTitle] = parsed;
-        return parsed;
+      const cached = parseCachedEntry(localStorage.getItem(storageKey));
+      if (cached !== void 0) {
+        memoryCache[wikiTitle] = cached;
+        return cached;
       }
     } catch {
     }
-    let result = null;
+    let lookup = { status: "error" };
     try {
       const res = await fetch(wikiUrlFor(wikiTitle));
-      if (res.ok) {
-        const data = await res.json();
-        const imageUrl = ((_b = data.thumbnail) == null ? void 0 : _b.source) || ((_c = data.originalimage) == null ? void 0 : _c.source) || null;
-        if (imageUrl) {
-          const pageUrl = ((_e = (_d = data.content_urls) == null ? void 0 : _d.desktop) == null ? void 0 : _e.page) || "https://en.wikipedia.org/wiki/" + encodeURIComponent(wikiTitle.replace(/ /g, "_"));
-          result = { imageUrl, pageUrl };
-        }
-      }
+      lookup = res.ok ? parseWikiSummary(await res.json(), wikiTitle) : lookupFromStatus(res.status);
     } catch {
     }
+    if (lookup.status === "error") return null;
+    const result = lookup.status === "found" ? lookup.result : null;
     memoryCache[wikiTitle] = result;
     try {
       localStorage.setItem(storageKey, result ? JSON.stringify(result) : "");
